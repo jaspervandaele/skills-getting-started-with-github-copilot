@@ -27,6 +27,35 @@ document.addEventListener("DOMContentLoaded", () => {
           <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
         `;
 
+        // Add participants section
+        const participantsContainer = document.createElement("div");
+        participantsContainer.className = "participants";
+
+        const participantsHeader = document.createElement("p");
+        participantsHeader.innerHTML = `<strong>Participants (${details.participants.length}):</strong>`;
+        participantsContainer.appendChild(participantsHeader);
+
+        const ul = document.createElement("ul");
+        ul.className = "participants-list";
+
+        if (!details.participants || details.participants.length === 0) {
+          const li = document.createElement("li");
+          li.className = "participant-item empty";
+          li.textContent = "No participants yet";
+          ul.appendChild(li);
+        } else {
+          details.participants.forEach((participant) => {
+            const li = document.createElement("li");
+            li.className = "participant-item";
+            // use textContent to avoid XSS
+            li.textContent = participant;
+            ul.appendChild(li);
+          });
+        }
+
+        participantsContainer.appendChild(ul);
+        activityCard.appendChild(participantsContainer);
+
         activitiesList.appendChild(activityCard);
 
         // Add option to select dropdown
